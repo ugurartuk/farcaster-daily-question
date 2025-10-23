@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Günün Sorusu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .user-info {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #555;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .question {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        .question-emoji {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        
+        .option {
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 3px solid #e0e0e0;
+            border-radius: 15px;
+            background: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            display: block;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-2px);
+        }
+        
+        .option:active {
+            transform: translateY(0);
+        }
+        
+        .option.voted {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .option:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            display: none;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .success-box {
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .success-box h3 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+        
+        .result-item {
+            margin-bottom: 20px;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .result-percent {
+            color: #667eea;
+            font-size: 18px;
+        }
+        
+        .bar-container {
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .bar-fill.purple { background: linear-gradient(90deg, #667eea, #764ba2); }
+        .bar-fill.pink { background: linear-gradient(90deg, #f093fb, #f5576c); }
+        .bar-fill.orange { background: linear-gradient(90deg, #fad961, #f76b1c); }
+        
+        .vote-count-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        .share-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: transform 0.2s;
+        }
+        
+        .share-btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .share-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        .loading {
+            text-align: center;
+            color: white;
+            padding: 50px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Yükleniyor...</p>
+        </div>
+
+        <div id="app" style="display: none;">
+            <div class="header">
+                <h1>📊 Günün Sorusu</h1>
+                <p>Her gün yeni bir soru!</p>
+                <div class="user-info" id="userInfo">
+                    👤 Kullanıcı bilgisi yükleniyor...
+                </div>
+            </div>
+
+            <div class="card">
+                <div id="pollSection">
+                    <div class="question">
+                        <span class="question-emoji">🤔</span>
+                        Farcaster'ı aktif kullanıyor musunuz?
+                    </div>
+                    
+                    <button class="option" onclick="vote(0)">
+                        ✅ Evet, her gün kullanıyorum
+                    </button>
+                    
+                    <button class="option" onclick="vote(1)">
+                        😊 Ara sıra kullanıyorum
+                    </button>
+                    
+                    <button class="option" onclick="vote(2)">
+                        ❌ Hayır, yeni başladım
+                    </button>
+                </div>
+
+                <div id="resultsSection" class="results">
+                    <div class="success-box">
+                        <h3>🎉 Teşekkürler!</h3>
+                        <p>Oyunuz başarıyla kaydedildi</p>
+                    </div>
+                    
+                    <div id="resultsContent"></div>
+                    
+                    <button class="share-btn" onclick="shareResults()">
+                        🔗 Sonuçları Paylaş
+                    </button>
+                </div>
+            </div>
+
+            <div class="footer">
+                ⛓️ Powered by Farcaster Mini Apps
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // Farcaster SDK'yı import et
+        let sdk;
+        try {
+            const module = await import('https://esm.sh/@farcaster/miniapp-sdk@0.1.0');
+            sdk = module.sdk;
+        } catch (error) {
+            console.log('SDK yüklenemedi, demo modunda çalışıyor');
+        }
+
+        // Sayfa yüklendiğinde
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // SDK varsa kullanıcı bilgisini al
+                if (sdk) {
+                    await sdk.actions.ready();
+                    const context = sdk.context;
+                    
+                    if (context && context.user) {
+                        document.getElementById('userInfo').innerHTML = 
+                            `👤 <strong>${context.user.username || 'Anonim'}</strong> • FID: ${context.user.fid || '---'}`;
+                    }
+                }
+            } catch (error) {
+                console.log('Kullanıcı bilgisi alınamadı:', error);
+            }
+            
+            // Loading'i gizle, app'i göster
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+            }, 800);
+        });
+
+        // Oy verme fonksiyonu
+        window.vote = function(optionIndex) {
+            // Tüm butonları devre dışı bırak
+            const buttons = document.querySelectorAll('.option');
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === optionIndex) {
+                    btn.classList.add('voted');
+                }
+            });
+
+            // Başlangıç oy sayıları
+            const voteCounts = [45, 32, 18];
+            voteCounts[optionIndex]++; // Seçilen şıkkın oyunu artır
+            
+            const total = voteCounts.reduce((a, b) => a + b, 0);
+            
+            // Sonuçları göster
+            setTimeout(() => {
+                showResults(optionIndex, voteCounts, total);
+            }, 500);
+        };
+
+        // Sonuçları göster
+        function showResults(selectedIndex, voteCounts, total) {
+            const options = [
+                'Evet, her gün kullanıyorum',
+                'Ara sıra kullanıyorum',
+                'Hayır, yeni başladım'
+            ];
+            
+            const colors = ['purple', 'pink', 'orange'];
+            
+            let html = '';
+            
+            options.forEach((option, idx) => {
+                const votes = voteCounts[idx];
+                const percentage = Math.round((votes / total) * 100);
+                
+                html += `
+                    <div class="result-item">
+                        <div class="result-header">
+                            <span>${option}</span>
+                            <span class="result-percent">${percentage}%</span>
+                        </div>
+                        <div class="bar-container">
+                            <div class="bar-fill ${colors[idx]}" style="width: ${percentage}%">
+                                ${percentage}%
+                            </div>
+                        </div>
+                        <div class="vote-count-text">${votes} oy</div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('resultsContent').innerHTML = html;
+            document.getElementById('pollSection').style.display = 'none';
+            document.getElementById('resultsSection').classList.add('show');
+        }
+
+        // Paylaşma fonksiyonu
+        window.shareResults = async function() {
+            const text = "Günün sorusuna cevap verdim! Sen de katıl 👉";
+            
+            try {
+                if (sdk && sdk.actions && sdk.actions.openUrl) {
+                    await sdk.actions.openUrl('https://warpcast.com/~/compose?text=' + encodeURIComponent(text));
+                } else if (navigator.share) {
+                    await navigator.share({
+                        title: 'Günün Sorusu',
+                        text: text,
+                        url: window.location.href
+                    });
+                } else {
+                    alert('Sonuçları Farcaster\'da paylaşabilirsiniz! 🎉');
+                }
+            } catch (error) {
+                console.log('Paylaşma hatası:', error);
+                alert('Cast olarak paylaşmak için Farcaster\'ı açın! 🚀');
+            }
+        };
+    </script>
+</body>
+</html>
