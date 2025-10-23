@@ -1,28 +1,9 @@
 {
-  "accountAssociation": {
-    "header": "eyJmaWQiOjQxNjUzNCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDY5ZDIzZEU1NDdEMzNiZjczRGJEMDdEZjQ3YTUzNWMzN2QyMUNFMmMifQ", 
-    "payload": "eyJkb21haW4iOiJmYXJjYXN0ZXItZGFpbHktcXVlc3Rpb24udmVyY2VsLmFwcCJ9", 
-    "signature": "KYPgpef8SGoB9MaSHIWEfGr9rqS7kabdAKh9eAmi+ZMXA44OyftseC3DiimYCTEyyNrMqACZsQCM+8bWn5+qjxs=" 
-  },
-  "miniapp": {
-    "version": "1",
-    "name": "My Mini App",
-    "homeUrl": "https://farcaster-daily-question.vercel.app/",
-    "iconUrl": "https://seninapp.vercel.app/icon.png",
-    "splashImageUrl": "https://seninapp.vercel.app/splash.png",
-    "splashBackgroundColor": "#FFFFFF",
-    "subtitle": "Kısa açıklama",
-    "description": "Farcaster için geliştirilmiş bir Base Mini App örneği.",
-    "screenshotUrls": [
-      "https://seninapp.vercel.app/screenshot1.png"
-    ],
-    "primaryCategory": "utility",
-    "tags": ["crypto", "base", "miniapp"],
-    "heroImageUrl": "https://seninapp.vercel.app/hero.png",
-    "tagline": "Basit. Hızlı. Zincirde.",
-    "ogTitle": "My Mini App",
-    "ogDescription": "Denemeye değer küçük ama güçlü bir mini app",
-    "ogImageUrl": "https://seninapp.vercel.app/og.png",
-    "noindex": true
-  }
+  "redirects": [
+    {
+      "source": "/.well-known/farcaster.json",
+      "destination": "https://api.farcaster.xyz/miniapps/hosted-manifest/019a12c2-0c15-ae16-0b84-63c66ad444cf",
+      "permanent": false
+    }
+  ]
 }
