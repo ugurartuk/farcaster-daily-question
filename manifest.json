@@ -1,0 +1,20 @@
+{
+  "frame": {
+    "name": "Daily Quest",
+    "version": "1",
+    "iconUrl": "https://farcaster-daily-question.vercel.app//icon.png",
+    "homeUrl": "https://farcaster-daily-question.vercel.app/",
+    "imageUrl": "https://farcaster-daily-question.vercel.app//image.png",
+    "splashImageUrl": "https://farcaster-daily-question.vercel.app//splash.png",
+    "splashBackgroundColor": "#FFFFFF",
+    "webhookUrl": "https://farcaster-daily-question.vercel.app//api/webhook",
+    "subtitle": "Günlük giriş kontrölü",
+    "description": "Uygulama geliştirilmeye devam ediyor.",
+    "primaryCategory": "utility"
+  },
+  "accountAssociation": {
+    "header": "eyJmaWQiOjQxNjUzNCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDY5ZDIzZEU1NDdEMzNiZjczRGJEMDdEZjQ3YTUzNWMzN2QyMUNFMmMifQ",
+    "payload": "eyJkb21haW4iOiJmYXJjYXN0ZXItZGFpbHktcXVlc3Rpb24udmVyY2VsLmFwcCJ9",
+    "signature": "KYPgpef8SGoB9MaSHIWEfGr9rqS7kabdAKh9eAmi+ZMXA44OyftseC3DiimYCTEyyNrMqACZsQCM+8bWn5+qjxs="
+  }
+}
