@@ -1,0 +1,7 @@
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjEsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgifQ",
+    "payload": "eyJkb21haW4iOiJmYXJjYXN0ZXItZGFpbHktcXVlc3Rpb24udmVyY2VsLmFwcCJ9",
+    "signature": "MHg"
+  }
+}
