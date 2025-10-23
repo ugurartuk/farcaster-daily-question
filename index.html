@@ -43,13 +43,15 @@
             font-size: 14px;
         }
         
-        .user-info {
+        .badge {
             background: rgba(102, 126, 234, 0.1);
-            padding: 12px;
-            border-radius: 10px;
-            margin-top: 15px;
-            font-size: 13px;
-            color: #555;
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 10px;
         }
         
         .card {
@@ -69,7 +71,7 @@
         }
         
         .question-emoji {
-            font-size: 40px;
+            font-size: 50px;
             display: block;
             margin-bottom: 15px;
         }
@@ -86,13 +88,20 @@
             cursor: pointer;
             transition: all 0.3s;
             text-align: left;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .option-emoji {
+            font-size: 24px;
         }
         
         .option:hover {
             border-color: #667eea;
             background: #f8f9ff;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
         }
         
         .option:active {
@@ -100,7 +109,7 @@
         }
         
         .option.voted {
-            background: #667eea;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border-color: #667eea;
         }
@@ -119,62 +128,84 @@
         }
         
         .success-box {
-            background: #d4edda;
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
             color: #155724;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
         
         .success-box h3 {
-            font-size: 20px;
-            margin-bottom: 5px;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        
+        .success-box p {
+            font-size: 14px;
+            opacity: 0.8;
         }
         
         .result-item {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .result-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .result-label {
             font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .result-percent {
             color: #667eea;
-            font-size: 18px;
+            font-size: 20px;
+            font-weight: bold;
         }
         
         .bar-container {
-            height: 40px;
+            height: 45px;
             background: #f0f0f0;
-            border-radius: 20px;
+            border-radius: 25px;
             overflow: hidden;
             position: relative;
         }
         
         .bar-fill {
             height: 100%;
-            border-radius: 20px;
-            transition: width 1s ease;
+            border-radius: 25px;
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            padding-left: 15px;
+            padding-left: 20px;
             color: white;
             font-weight: bold;
+            font-size: 16px;
         }
         
-        .bar-fill.purple { background: linear-gradient(90deg, #667eea, #764ba2); }
-        .bar-fill.pink { background: linear-gradient(90deg, #f093fb, #f5576c); }
-        .bar-fill.orange { background: linear-gradient(90deg, #fad961, #f76b1c); }
+        .bar-fill.purple { 
+            background: linear-gradient(90deg, #667eea, #764ba2); 
+        }
+        .bar-fill.pink { 
+            background: linear-gradient(90deg, #f093fb, #f5576c); 
+        }
+        .bar-fill.orange { 
+            background: linear-gradient(90deg, #fad961, #f76b1c); 
+        }
         
         .vote-count-text {
-            font-size: 12px;
+            font-size: 13px;
             color: #999;
-            margin-top: 5px;
+            margin-top: 8px;
+            text-align: right;
         }
         
         .share-btn {
@@ -187,12 +218,13 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 25px;
-            transition: transform 0.2s;
+            margin-top: 30px;
+            transition: all 0.3s;
         }
         
         .share-btn:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
         
         .share-btn:active {
@@ -201,125 +233,118 @@
         
         .footer {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 25px;
             color: white;
             font-size: 13px;
             opacity: 0.9;
         }
         
-        .loading {
-            text-align: center;
-            color: white;
-            padding: 50px;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+        .container > * {
+            animation: fadeIn 0.6s ease-out forwards;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .header {
+            animation-delay: 0.1s;
+        }
+        
+        .card {
+            animation-delay: 0.2s;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-            <p>Yükleniyor...</p>
+        <div class="header">
+            <h1>📊 Günün Sorusu</h1>
+            <p>Herkese açık oylama platformu</p>
+            <span class="badge">🚀 Farcaster Mini App</span>
         </div>
 
-        <div id="app" style="display: none;">
-            <div class="header">
-                <h1>📊 Günün Sorusu</h1>
-                <p>Her gün yeni bir soru!</p>
-                <div class="user-info" id="userInfo">
-                    👤 Kullanıcı bilgisi yükleniyor...
+        <div class="card">
+            <div id="pollSection">
+                <div class="question">
+                    <span class="question-emoji">🤔</span>
+                    Farcaster'ı aktif kullanıyor musunuz?
                 </div>
+                
+                <button class="option" onclick="vote(0)">
+                    <span class="option-emoji">✅</span>
+                    <span>Evet, her gün kullanıyorum</span>
+                </button>
+                
+                <button class="option" onclick="vote(1)">
+                    <span class="option-emoji">😊</span>
+                    <span>Ara sıra kullanıyorum</span>
+                </button>
+                
+                <button class="option" onclick="vote(2)">
+                    <span class="option-emoji">❌</span>
+                    <span>Hayır, yeni başladım</span>
+                </button>
             </div>
 
-            <div class="card">
-                <div id="pollSection">
-                    <div class="question">
-                        <span class="question-emoji">🤔</span>
-                        Farcaster'ı aktif kullanıyor musunuz?
-                    </div>
-                    
-                    <button class="option" onclick="vote(0)">
-                        ✅ Evet, her gün kullanıyorum
-                    </button>
-                    
-                    <button class="option" onclick="vote(1)">
-                        😊 Ara sıra kullanıyorum
-                    </button>
-                    
-                    <button class="option" onclick="vote(2)">
-                        ❌ Hayır, yeni başladım
-                    </button>
+            <div id="resultsSection" class="results">
+                <div class="success-box">
+                    <h3>🎉 Teşekkürler!</h3>
+                    <p>Oyunuz başarıyla kaydedildi</p>
                 </div>
-
-                <div id="resultsSection" class="results">
-                    <div class="success-box">
-                        <h3>🎉 Teşekkürler!</h3>
-                        <p>Oyunuz başarıyla kaydedildi</p>
-                    </div>
-                    
-                    <div id="resultsContent"></div>
-                    
-                    <button class="share-btn" onclick="shareResults()">
-                        🔗 Sonuçları Paylaş
-                    </button>
-                </div>
+                
+                <div id="resultsContent"></div>
+                
+                <button class="share-btn" onclick="shareResults()">
+                    🔗 Sonuçları Paylaş
+                </button>
             </div>
+        </div>
 
-            <div class="footer">
-                ⛓️ Powered by Farcaster Mini Apps
-            </div>
+        <div class="footer">
+            ⛓️ Powered by Farcaster Mini Apps
         </div>
     </div>
 
-    <script type="module">
-        // Farcaster SDK'yı import et
-        let sdk;
-        try {
-            const module = await import('https://esm.sh/@farcaster/miniapp-sdk@0.1.0');
-            sdk = module.sdk;
-        } catch (error) {
-            console.log('SDK yüklenemedi, demo modunda çalışıyor');
-        }
+    <script>
+        // Sayfa yüklendiğinde otomatik başlat
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Uygulama yüklendi!');
+            
+            // Farcaster SDK'yı yükle (opsiyonel)
+            loadFarcasterSDK();
+        });
 
-        // Sayfa yüklendiğinde
-        window.addEventListener('DOMContentLoaded', async () => {
+        // Farcaster SDK'yı yükle
+        async function loadFarcasterSDK() {
             try {
-                // SDK varsa kullanıcı bilgisini al
-                if (sdk) {
-                    await sdk.actions.ready();
-                    const context = sdk.context;
+                const module = await import('https://esm.sh/@farcaster/miniapp-sdk@0.1.0');
+                if (module && module.sdk) {
+                    await module.sdk.actions.ready();
+                    console.log('Farcaster SDK yüklendi');
                     
+                    // Kullanıcı bilgisini al
+                    const context = module.sdk.context;
                     if (context && context.user) {
-                        document.getElementById('userInfo').innerHTML = 
-                            `👤 <strong>${context.user.username || 'Anonim'}</strong> • FID: ${context.user.fid || '---'}`;
+                        console.log('Kullanıcı:', context.user.username);
                     }
                 }
             } catch (error) {
-                console.log('Kullanıcı bilgisi alınamadı:', error);
+                console.log('SDK yüklenemedi, normal modda çalışıyor:', error);
             }
-            
-            // Loading'i gizle, app'i göster
-            setTimeout(() => {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
-            }, 800);
-        });
+        }
 
         // Oy verme fonksiyonu
-        window.vote = function(optionIndex) {
+        function vote(optionIndex) {
+            console.log('Oy verildi:', optionIndex);
+            
             // Tüm butonları devre dışı bırak
             const buttons = document.querySelectorAll('.option');
             buttons.forEach((btn, idx) => {
@@ -330,7 +355,7 @@
             });
 
             // Başlangıç oy sayıları
-            const voteCounts = [45, 32, 18];
+            const voteCounts = [67, 45, 23];
             voteCounts[optionIndex]++; // Seçilen şıkkın oyunu artır
             
             const total = voteCounts.reduce((a, b) => a + b, 0);
@@ -338,15 +363,15 @@
             // Sonuçları göster
             setTimeout(() => {
                 showResults(optionIndex, voteCounts, total);
-            }, 500);
-        };
+            }, 600);
+        }
 
         // Sonuçları göster
         function showResults(selectedIndex, voteCounts, total) {
             const options = [
-                'Evet, her gün kullanıyorum',
-                'Ara sıra kullanıyorum',
-                'Hayır, yeni başladım'
+                { text: 'Evet, her gün kullanıyorum', emoji: '✅' },
+                { text: 'Ara sıra kullanıyorum', emoji: '😊' },
+                { text: 'Hayır, yeni başladım', emoji: '❌' }
             ];
             
             const colors = ['purple', 'pink', 'orange'];
@@ -360,15 +385,18 @@
                 html += `
                     <div class="result-item">
                         <div class="result-header">
-                            <span>${option}</span>
+                            <span class="result-label">
+                                <span>${option.emoji}</span>
+                                <span>${option.text}</span>
+                            </span>
                             <span class="result-percent">${percentage}%</span>
                         </div>
                         <div class="bar-container">
                             <div class="bar-fill ${colors[idx]}" style="width: ${percentage}%">
-                                ${percentage}%
+                                ${percentage > 10 ? percentage + '%' : ''}
                             </div>
                         </div>
-                        <div class="vote-count-text">${votes} oy</div>
+                        <div class="vote-count-text">${votes} kişi oy verdi</div>
                     </div>
                 `;
             });
@@ -376,29 +404,23 @@
             document.getElementById('resultsContent').innerHTML = html;
             document.getElementById('pollSection').style.display = 'none';
             document.getElementById('resultsSection').classList.add('show');
+            
+            console.log('Sonuçlar gösterildi');
         }
 
         // Paylaşma fonksiyonu
-        window.shareResults = async function() {
+        function shareResults() {
             const text = "Günün sorusuna cevap verdim! Sen de katıl 👉";
+            const url = window.location.href;
             
-            try {
-                if (sdk && sdk.actions && sdk.actions.openUrl) {
-                    await sdk.actions.openUrl('https://warpcast.com/~/compose?text=' + encodeURIComponent(text));
-                } else if (navigator.share) {
-                    await navigator.share({
-                        title: 'Günün Sorusu',
-                        text: text,
-                        url: window.location.href
-                    });
-                } else {
-                    alert('Sonuçları Farcaster\'da paylaşabilirsiniz! 🎉');
-                }
-            } catch (error) {
-                console.log('Paylaşma hatası:', error);
-                alert('Cast olarak paylaşmak için Farcaster\'ı açın! 🚀');
-            }
-        };
+            // Farcaster Warpcast compose URL'i
+            const warpcastUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(text + ' ' + url)}`;
+            
+            // Yeni sekmede aç
+            window.open(warpcastUrl, '_blank');
+            
+            console.log('Paylaşım linki açıldı');
+        }
     </script>
 </body>
 </html>
